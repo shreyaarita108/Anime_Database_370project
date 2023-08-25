@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your App Title</title>
+  <style>
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    
+    
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Argent&display=swap" rel="stylesheet">
+</head>
+<body>
+  <%- include('navbar.ejs', { content: '', currentPage: 'home' }) %>
+
+  
+  <div class="content">
+    <% if (username) { %>
+      <h1>Welcome, <%= username %>! This is your homepage.</h1>
+    <% } else { %>
+      <h1>Welcome! This is the official homepage.</h1>
+    <% } %>
+    <!-- Add more content here -->
+  </div>
+  <!-- Add your scripts here -->
+</body>
+</html>
