@@ -103,9 +103,9 @@
         <h2 class="anime-title"><%= item.eventName %></h2>
         <p class="anime-studio"><strong>Year:</strong> <%= item.eventYear %></p>
         <div class="button-container">
-        <form action="/user/delete-item-watchlist" method="post">
-          <input type="hidden" name="animename" value="<%= item.eventName %>">
-          <button class="remove-button" type="submit">Remove from Watchlist</button>
+        <form action="/user/eventdelete" method="post">
+          <input type="hidden" name="eventName" value="<%= item.eventName %>">
+          <button class="remove-button" type="submit">Remove from EVENT</button>
         </form>
 
       </div>

@@ -57,7 +57,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
 
 app.get('/', (req,res) =>{
-  res.redirect('/profile');
+  res.redirect('/user/home');
 })
 
 
@@ -146,16 +146,16 @@ app.post('/user/add_event',(req,res) =>{
 
 })
 
-// app.post('/user/eventdelete ',(req,res) =>{
-//   const { eventName, eventYear } = req.body;
-//   const userId = req.session.userId;
+app.post('/user/eventdelete',(req,res) =>{
+  const { eventName} = req.body;
+  const userId = req.session.userId;
 
-//   connection.query('INSERT INTO interested_events (eventName,eventYear,user_id) VALUES (?,?,?)',[eventName,eventYear,userId], (err) =>{
-//     if (err) throw err;
-//     res.redirect('/events')
-//   })
+  connection.query('DELETE FROM interested_events WHERE user_id = ? AND eventName = ?',[userId,eventName], (err) =>{
+    if (err) throw err;
+    res.redirect('/user/eventlist')
+  })
 
-// })
+})
 
 app.get('/anime', (req, res) => {
   connection.query('SELECT * FROM anime', (err, animeResults) => {

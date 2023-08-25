@@ -55,7 +55,7 @@ router.post('/login', (req, res) => {
       if (results.length && results[0].password === password) {
         req.session.userId = results[0].id; // Store the user's ID in the session
         req.session.username = results[0].username
-        res.redirect('/profile');
+        res.redirect('/user/home');
       } else {
         res.status(401).json({ message: 'Invalid username or password' });
       }
