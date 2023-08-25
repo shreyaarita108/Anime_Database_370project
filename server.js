@@ -56,6 +56,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
 
 
+app.get('/', (req,res) =>{
+  res.redirect('/profile');
+})
+
+
 app.get('/profile', (req, res) => {
  if (req.session.userId) {
    connection.query('SELECT * FROM users WHERE ID = ?', [req.session.userId], (err, results) => {
@@ -111,6 +116,46 @@ app.get('/user/watchlist', (req, res) => {
     res.redirect('/user/login');
   }
 });
+
+
+
+app.get('/user/eventlist', (req, res) => {
+  if (req.session.userId) {
+    connection.query('SELECT * FROM interested_events WHERE user_id = ? ',
+      [req.session.userId],
+      (err, watchlistResults) => {
+        if (err) throw err;
+        res.render('event_list', { eventlist: watchlistResults, username: req.session.username  });
+      }
+    );
+  } else {
+    res.redirect('/user/login');
+  }
+});
+
+
+app.post('/user/add_event',(req,res) =>{
+  const { eventName, eventYear } = req.body;
+  const userId = req.session.userId;
+
+  connection.query('INSERT INTO interested_events (eventName,eventYear,user_id) VALUES (?,?,?)',[eventName,eventYear,userId], (err) =>{
+    if (err) throw err;
+    res.redirect('/events')
+  })
+
+
+})
+
+// app.post('/user/eventdelete ',(req,res) =>{
+//   const { eventName, eventYear } = req.body;
+//   const userId = req.session.userId;
+
+//   connection.query('INSERT INTO interested_events (eventName,eventYear,user_id) VALUES (?,?,?)',[eventName,eventYear,userId], (err) =>{
+//     if (err) throw err;
+//     res.redirect('/events')
+//   })
+
+// })
 
 app.get('/anime', (req, res) => {
   connection.query('SELECT * FROM anime', (err, animeResults) => {

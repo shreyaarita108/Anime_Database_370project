@@ -29,9 +29,7 @@ const db = mysql.createConnection({
       res.render('anime', { anime: results, username: req.session.userId });
     });
   });
-  router.get('/events/add', (req, res) => {
-      res.render('add_events');
-    });
+
   // Handle Movies page
   router.get('/movies', (req, res) => {
     const query = 'SELECT * FROM movies';

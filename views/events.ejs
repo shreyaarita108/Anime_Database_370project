@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Upcoming Anime Events</title>
+    <title>Upcoming event Events</title>
     <!-- Add Bootstrap CDN links -->
     <link
       rel="stylesheet"
@@ -19,9 +19,9 @@
       </div>
 
       <!-- Your existing content -->
-      <h1 class="text-center">Upcoming Anime Events</h1>
+      <h1 class="text-center">Upcoming event Events</h1>
       
-      <a href="/events/add" class="btn btn-primary mb-3">Add New Event</a>
+  
       
       <ul class="list-unstyled">
         <% events.forEach(event => { %>
@@ -40,6 +40,11 @@
             <p><strong>Ticket Price:</strong> $<%= event.ticket_price.toFixed(2) %></p>
             <p><strong>Attraction:</strong> <%= event.Attraction %></p>
           </div>
+          <form action="/user/add_event" method="post">
+            <input type="hidden" name="eventName" value="<%= event.name %>">
+            <input type="hidden" name="eventYear" value="<%= event.year %>">
+            <button type="submit">Add to Events</button>
+          </form>
         </li>
         <% }); %>
       </ul>
