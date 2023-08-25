@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 25, 2023 at 04:09 PM
+-- Generation Time: Aug 25, 2023 at 07:27 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -174,8 +174,7 @@ CREATE TABLE `interested_events` (
 --
 
 INSERT INTO `interested_events` (`id`, `eventName`, `eventYear`, `user_id`) VALUES
-(1, 'AnimeCon Expo', 2023, 1),
-(3, 'Otaku Fest', 2023, 1);
+(10, 'AnimeCon Expo', 2023, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,19 +203,21 @@ INSERT INTO `list` (`id`, `userid`, `type`) VALUES
 --
 
 CREATE TABLE `manga` (
-  `manga_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `anime_name` varchar(255) DEFAULT NULL,
-  `chapters` varchar(255) DEFAULT NULL
+  `chapters` int(11) DEFAULT NULL,
+  `manga_link` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `manga`
 --
 
-INSERT INTO `manga` (`manga_id`, `anime_name`, `chapters`) VALUES
-(1, 'Naruto', 'https://docs.google.com/file/d/0B9k2vgdoGoJ1SkZ0WXNsT2Mwa1k/view?resourcekey=0-wt0D3NSkSBapGz_IvxvweA'),
-(2, 'One Piece', 'https://example.com/one_piece_chapters.pdf'),
-(3, 'Attack on Titan', 'https://example.com/attack_on_titan_chapters.pdf');
+INSERT INTO `manga` (`id`, `anime_name`, `chapters`, `manga_link`) VALUES
+(1, 'Naruto', 700, 'https://drive.google.com/file/d/1Uk2fDpEJjlxv7xG_V0E41CSu7xEjA9lu/view?usp=sharing'),
+(2, 'One Piece', 1033, 'http://drive.example.com/one-piece'),
+(3, 'Attack on Titan', 139, 'https://ww6.manganelo.tv/chapter/manga-oa952283/chapter-139'),
+(5, 'Bleach', 687, 'https://bleach-read.com/');
 
 -- --------------------------------------------------------
 
@@ -367,6 +368,13 @@ ALTER TABLE `list`
   ADD KEY `userid` (`userid`);
 
 --
+-- Indexes for table `manga`
+--
+ALTER TABLE `manga`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `anime_name` (`anime_name`);
+
+--
 -- Indexes for table `thevotes`
 --
 ALTER TABLE `thevotes`
@@ -400,13 +408,19 @@ ALTER TABLE `anime_contest`
 -- AUTO_INCREMENT for table `interested_events`
 --
 ALTER TABLE `interested_events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `list`
 --
 ALTER TABLE `list`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21301707;
+
+--
+-- AUTO_INCREMENT for table `manga`
+--
+ALTER TABLE `manga`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `thevotes`
