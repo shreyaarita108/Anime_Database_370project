@@ -30,8 +30,16 @@ const db = mysql.createConnection({
     });
   });
 
-  // Handle Movies page
-  router.get('/movies', (req, res) => {
+  router.get('/manga', (req, res) => {
+    const query = 'SELECT * FROM manga';
+    db.query(query, (err, results) => {
+        if (err) throw err;
+
+        res.render('show-manga', { mangas: results });
+      });
+  });
+
+ router.get('/movies', (req, res) => {
     const query = 'SELECT * FROM movies';
     db.query(query, (err, results) => {
       if (err) {
@@ -42,6 +50,17 @@ const db = mysql.createConnection({
     });
   });
 
+router.get('/series', (req, res) => {
+    const query = 'SELECT * FROM series';
+    db.query(query, (err, results) => {
+      if (err) {
+        res.status(500).json({ error: 'Error fetching series data' });
+      } else {
+        res.render('series', { series: results });
+      }
+    });
+  });
+  
 
 
   
@@ -60,16 +79,20 @@ const db = mysql.createConnection({
   
   router.post('/events', (req, res) => {
     const { name, year, location, date, ticket_price, attraction, image_url } = req.body;
-  
-    // Insert event data, image URL, and event poster URL into the database
-    const query = 'INSERT INTO events (name, year, location, date, ticket_price,attraction, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    db.query(query, [name, year, location, date, ticket_price, attraction, image_url], (err, result) => {
-      if (err) {
-        res.status(500).json({ error: 'Error adding event data' });
-      } else {
-        res.redirect('/events'); // Redirect to the events page after successful insertion
-      }
-    });
+    const userId = req.session.userId
+    
+    if (userId) {
+      const query = 'INSERT INTO events (name, year, location, date, ticket_price,attraction, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)';
+      db.query(query, [name, year, location, date, ticket_price, attraction, image_url], (err, result) => {
+        if (err) {
+          res.status(500).json({ error: 'Error adding event data' });
+        } else {
+          res.redirect('/events'); // Redirect to the events page after successful insertion
+        }
+      });
+    }
+    
+
   });
   
   module.exports = router;

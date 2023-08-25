@@ -143,7 +143,16 @@ app.post('/user/add_event',(req,res) =>{
     res.redirect('/events')
   })
 
+})
 
+app.get('/events/add',(req,res) => {
+  const user  = req.session.userId
+
+  if (user) {
+    res.render('add_events')
+  }else{
+    res.redirect('/profile')
+  }
 })
 
 app.post('/user/eventdelete',(req,res) =>{
