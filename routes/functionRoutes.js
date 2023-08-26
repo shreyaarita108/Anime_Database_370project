@@ -76,15 +76,30 @@ router.get('/series', (req, res) => {
     });
   });
   
+
+
+
+  function generateRandomEventID() {
+    const min = 100;
+    const max = 999;
+    const randomThreeDigitNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    const eventID = `event${randomThreeDigitNumber}`;
+    return eventID;
+  }
   
   router.post('/events', (req, res) => {
     const { name, year, location, date, ticket_price, attraction, image_url } = req.body;
+    const id = generateRandomEventID()
     const userId = req.session.userId
-    
+    console.log("tausif",req.body, userId)
+
+
+
     if (userId) {
-      const query = 'INSERT INTO events (name, year, location, date, ticket_price,attraction, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)';
-      db.query(query, [name, year, location, date, ticket_price, attraction, image_url], (err, result) => {
+      const query = 'INSERT INTO events (id,name, year, location, date, ticket_price, Attraction, image_url) VALUES (?, ?, ?, ?, ?, ?, ?,?)';
+      db.query(query, [id,name, year, location, date, ticket_price, attraction, image_url], (err, result) => {
         if (err) {
+          console.log(err)
           res.status(500).json({ error: 'Error adding event data' });
         } else {
           res.redirect('/events'); // Redirect to the events page after successful insertion
